@@ -1,0 +1,22 @@
+﻿@page
+@model Restauracja.Pages.Promotion.PublicModel
+@{
+    ViewData["Title"] = "Promocje";
+}
+
+<h1>Promocje dla wszystkich</h1>
+
+<div class="row">
+    @foreach (var promo in Model.PublicPromotions)
+    {
+        <div class="col-md-4">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">@promo.Title</h5>
+                    <p class="card-text">@promo.Description</p>
+                    <p class="card-text"><strong>Rabat:</strong> @promo.Discount%</p>
+                </div>
+            </div>
+        </div>
+    }
+</div>

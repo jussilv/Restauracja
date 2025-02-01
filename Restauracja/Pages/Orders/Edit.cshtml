@@ -1,0 +1,35 @@
+﻿@model Restauracja.Pages.Orders.EditModel
+@{
+    ViewData["Title"] = "Edit Order";
+}
+
+<h1>Edit Order</h1>
+
+<form method="post">
+    <div>
+        <label asp-for="Order.UserId"></label>
+        <input asp-for="Order.UserId" readonly />
+    </div>
+    <div>
+        <label asp-for="Order.OrderDate"></label>
+        <input asp-for="Order.OrderDate" type="datetime-local" />
+    </div>
+    <div>
+        <label asp-for="Order.TotalPrice"></label>
+        <input asp-for="Order.TotalPrice" readonly />
+    </div>
+
+    <div>
+        <label asp-for="Order.Status">Order Status</label>
+        <select asp-for="Order.Status">
+            <option value="Oczekujące">Oczekujące</option>
+            <option value="W trakcie realizacji">W trakcie realizacji</option>
+            <option value="Zrealizowane">Zrealizowane</option>
+            <option value="Anulowane">Anulowane</option>
+        </select>
+    </div>
+
+    <button type="submit">Save</button>
+</form>
+
+<a asp-page="./Index">Back to Orders</a>

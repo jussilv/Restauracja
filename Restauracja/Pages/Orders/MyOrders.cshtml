@@ -1,0 +1,71 @@
+﻿@page
+@using Restauracja.Models
+@model Restauracja.Pages.Orders.MyOrdersModel
+@{
+    ViewData["Title"] = "Moje zamówienia";
+}
+
+<h1 class="text-center my-4">🛍️ Moje zamówienia</h1>
+
+<form method="get" class="mb-4">
+    <div class="row">
+        <div class="col-md-4">
+            <input type="text" name="SearchTerm" class="form-control" placeholder="🔎 Wyszukaj po nazwie potrawy..." value="@Model.SearchTerm">
+        </div>
+        <div class="col-md-4">
+            <select name="SortBy" class="form-control">
+                <option value="">Sortuj...</option>
+                <option value="price_desc" selected="@(Model.SortBy == "price_desc")">💰 Cena: od najwyższej</option>
+                <option value="price_asc" selected="@(Model.SortBy == "price_asc")">💰 Cena: od najniższej</option>
+                <option value="date_desc" selected="@(Model.SortBy == "date_desc")">🆕 Najnowsze</option>
+                <option value="date_asc" selected="@(Model.SortBy == "date_asc")">📆 Najstarsze</option>
+            </select>
+        </div>
+        <div class="col-md-4">
+            <button type="submit" class="btn btn-primary w-100">🔎 Filtruj</button>
+        </div>
+    </div>
+</form>
+
+<div class="container">
+    <div class="row">
+        @foreach (var order in Model.Orders)
+        {
+            <div class="col-md-6 mb-4">
+                <div class="card shadow-lg">
+                    <div class="card-body">
+                        <h5 class="card-title">📅 Zamówienie z @order.OrderDate.ToString("dd.MM.yyyy")</h5>
+                        <p class="card-text"><strong>Status:</strong> @order.Status</p>
+                        <p class="fw-bold text-primary">💰 Łączna cena: @order.TotalPrice PLN</p>
+
+                        <h6>🛒 Pozycje w zamówieniu:</h6>
+                        <ul class="list-group">
+                            @foreach (var item in order.OrderItems)
+                            {
+                                <li class="list-group-item d-flex justify-content-between">
+                                    <span>@item.MenuItem.Name x @item.Quantity</span>
+                                    <span>@item.Price PLN</span>
+                                </li>
+                            }
+                            @foreach (var detail in order.OrderDetails)
+                            {
+                                <li class="list-group-item d-flex justify-content-between">
+                                    <span>@detail.MenuItem.Name x @detail.Quantity</span>
+                                    <span>@detail.Price PLN</span>
+                                </li>
+                            }
+                        </ul>
+
+                        @if (order.Status == PaymentStatus.Oczekujące)
+                        {
+                            <form method="post" asp-page-handler="Pay" asp-route-id="@order.Id" class="mt-3">
+                                <button type="submit" class="btn btn-success w-100">💳 Zapłać</button>
+                            </form>
+                        }
+
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

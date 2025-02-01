@@ -1,0 +1,21 @@
+﻿@model List<Restauracja.Models.MenuItem>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Menu</title>
+</head>
+<body>
+    <h1>Menu</h1>
+    <ul>
+        @foreach (var item in Model)
+        {
+            <li>
+                <h3>@item.Name</h3>
+                <p>@item.Description</p>
+                <p>Cena: @item.Price PLN</p>
+            </li>
+        }
+    </ul>
+</body>
+</html>

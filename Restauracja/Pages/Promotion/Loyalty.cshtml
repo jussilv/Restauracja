@@ -1,0 +1,29 @@
+﻿@page
+@model Restauracja.Pages.Promotion.LoyaltyModel
+@{
+    ViewData["Title"] = "Promocje dla stałych klientów";
+}
+
+<h1>Promocje dla stałych klientów</h1>
+
+@if (User.Identity.IsAuthenticated)
+{
+    <div class="row">
+        @foreach (var promo in Model.LoyaltyPromotions)
+        {
+            <div class="col-md-4">
+                <div class="card mb-3 border-success">
+                    <div class="card-body">
+                        <h5 class="card-title">@promo.Title</h5>
+                        <p class="card-text">@promo.Description</p>
+                        <p class="card-text"><strong>Rabat:</strong> @promo.Discount%</p>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <p class="text-danger">Musisz być zalogowany, aby zobaczyć promocje lojalnościowe.</p>
+}

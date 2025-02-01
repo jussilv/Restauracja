@@ -1,0 +1,107 @@
+﻿@page
+@model Restauracja.Pages.Cart.CartModel
+
+@{
+    ViewData["Title"] = "Twój Koszyk";
+}
+
+<h1>Twój Koszyk</h1>
+
+@if (Model.CartItems.Count == 0)
+{
+    <p>Twój koszyk jest pusty.</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Produkt</th>
+                <th>Ilość</th>
+                <th>Cena</th>
+                <th>Razem</th>
+                <th>Usuń</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.CartItems)
+            {
+                <tr>
+                    <td>@item.MenuItem.Name</td>
+                    <td>@item.Quantity</td>
+                    <td>@($"{item.MenuItem.Price:0.00}") PLN</td>
+                    <td>@($"{item.MenuItem.Price * item.Quantity:0.00}") PLN</td>
+                    <td>
+                        <form method="post">
+                            <input type="hidden" name="itemId" value="@item.Id" />
+                            <button type="submit" asp-page-handler="RemoveItem" class="btn btn-danger">🗑 Usuń</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <h3>Podsumowanie</h3>
+    <p><strong>Łączna kwota:</strong> @($"{Model.TotalPrice:0.00}") PLN</p>
+
+    @if (!Model.IsDiscountApplied)
+    {
+        <form method="post">
+            <button type="submit" asp-page-handler="ApplyDiscount" class="btn btn-success">
+                🎉 Zastosuj rabat 5%
+            </button>
+        </form>
+    }
+    else
+    {
+        <p><strong>Rabat:</strong> -@Model.DiscountApplied.ToString("0.00") PLN</p>
+        <p><strong>Nowa kwota:</strong> @Model.FinalPrice.ToString("0.00") PLN</p>
+    }
+
+    <h3>Dane dostawy</h3>
+    <form method="post">
+        <div class="mb-3">
+            <label class="form-label">Imię i nazwisko</label>
+            <input type="text" asp-for="FullName" class="form-control" required pattern="[A-Za-zÀ-ÖØ-öø-ÿ\s]+" />
+            <span asp-validation-for="FullName" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Ulica</label>
+            <input type="text" asp-for="Street" class="form-control" required pattern="[A-Za-zÀ-ÖØ-öø-ÿ\s]+" />
+            <span asp-validation-for="Street" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Numer budynku</label>
+            <input type="text" asp-for="BuildingNumber" class="form-control" required />
+            <span asp-validation-for="BuildingNumber" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Numer mieszkania</label>
+            <input type="text" asp-for="ApartmentNumber" class="form-control" />
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Kod pocztowy</label>
+            <input type="text" asp-for="PostalCode" class="form-control" required pattern="\d{2}-\d{3}" />
+            <span asp-validation-for="PostalCode" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Miasto</label>
+            <input type="text" asp-for="City" class="form-control" required pattern="[A-Za-zÀ-ÖØ-öø-ÿ\s]+" />
+            <span asp-validation-for="City" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Numer telefonu</label>
+            <input type="text" asp-for="PhoneNumber" class="form-control" required pattern="\d{9}" />
+            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+        </div>
+
+        <button type="submit" asp-page-handler="Checkout" class="btn btn-primary">
+            🛒 Złóż zamówienie
+        </button>
+    </form>
+}
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

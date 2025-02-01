@@ -1,0 +1,23 @@
+﻿@page "{id:int}"
+@model Restauracja.Pages.Orders.CheckoutModel
+@{
+    ViewData["Title"] = "Płatność za zamówienie";
+}
+
+<h2>Płatność za zamówienie</h2>
+
+@if (Model.Order != null)
+{
+    <p><strong>Numer zamówienia:</strong> @Model.Order.Id</p>
+    <p><strong>Kwota do zapłaty:</strong> @Model.Order.TotalPrice PLN</p>
+
+    <form method="post">
+        <button type="submit" asp-page-handler="Pay" asp-route-id="@Model.Order.Id" class="btn btn-primary">
+            Zapłać teraz 💳
+        </button>
+    </form>
+}
+else
+{
+    <p class="text-danger">Nie znaleziono zamówienia.</p>
+}

@@ -1,0 +1,28 @@
+﻿@page
+@model Restauracja.Pages.MenuModel
+@{
+    ViewData["Title"] = "Nasze Menu";
+}
+
+<h1 class="text-center my-4">🍽️ Nasze Menu 🍽️</h1>
+
+<div class="container">
+    <div class="row">
+        @foreach (var item in Model.MenuItems)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card shadow-lg h-100">
+                    <div class="card-body text-center">
+                        <h5 class="card-title fw-bold">@item.Name</h5>
+                        <p class="card-text text-muted">@item.Description</p>
+                        <p class="text-primary fw-bold fs-5">@item.Price PLN</p>
+
+                        <form method="post" asp-page-handler="AddToCart" asp-route-id="@item.Id">
+                            <button type="submit" class="btn btn-success w-100 mt-2">🛒 Dodaj do koszyka</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

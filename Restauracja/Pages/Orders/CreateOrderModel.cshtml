@@ -1,0 +1,20 @@
+﻿@page
+@model Restauracja.Pages.Orders.CreateOrderModel
+@using Restauracja.Models
+
+<h1>Stwórz zamówienie</h1>
+
+<form method="post">
+    <fieldset>
+        <legend>Wybierz pozycje z menu:</legend>
+        @foreach (var item in Model.MenuItems)
+        {
+            <div>
+                <input type="checkbox" name="SelectedMenuItems" value="@item.Id" id="menu-item-@item.Id" />
+                <label for="menu-item-@item.Id">@item.Name (@item.Price PLN)</label>
+            </div>
+        }
+    </fieldset>
+
+    <button type="submit">Zamów</button>
+</form>

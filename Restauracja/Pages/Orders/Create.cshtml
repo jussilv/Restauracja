@@ -1,0 +1,35 @@
+﻿@page
+@model Restauracja.Pages.Orders.CreateModel
+@{
+    ViewData["Title"] = "Podsumowanie zamówienia";
+}
+
+<h1>Podsumowanie zamówienia</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th>Produkt</th>
+            <th>Cena</th>
+            <th>Ilość</th>
+            <th>Łącznie</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.CartItems)
+        {
+            <tr>
+                <td>@item.MenuItem.Name</td>
+                <td>@item.MenuItem.Price PLN</td>
+                <td>@item.Quantity</td>
+                <td>@(item.MenuItem.Price * item.Quantity) PLN</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<p><strong>Łączna kwota: @Model.CartItems.Sum(i => i.MenuItem.Price * i.Quantity) PLN</strong></p>
+
+<form method="post">
+    <button type="submit">Złóż zamówienie</button>
+</form>

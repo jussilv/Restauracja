@@ -1,0 +1,11 @@
+﻿@page "{orderId:int}"
+@model Restauracja.Pages.Orders.OrderConfirmedModel
+@{
+    ViewData["Title"] = "Potwierdzenie zamówienia";
+}
+
+<h1>Dziękujemy za zamówienie!</h1>
+<p>Twoje zamówienie numer <strong>@Model.Order.Id</strong> zostało złożone.</p>
+<p>Łączna kwota: <strong>@Model.Order.TotalPrice PLN</strong></p>
+
+<a asp-page="/Index" class="btn btn-primary">Powrót do strony głównej</a>

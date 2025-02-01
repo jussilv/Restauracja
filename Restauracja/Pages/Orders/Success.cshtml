@@ -1,0 +1,10 @@
+﻿@page "{id:int}"
+@model Restauracja.Pages.Orders.SuccessModel
+@{
+    ViewData["Title"] = "Płatność zakończona sukcesem";
+}
+
+<h2>Dziękujemy za zamówienie! ✅</h2>
+<p>Twoja płatność została pomyślnie przetworzona.</p>
+
+<a asp-page="/Orders/MyOrders" class="btn btn-primary">Przejdź do zamówień</a>

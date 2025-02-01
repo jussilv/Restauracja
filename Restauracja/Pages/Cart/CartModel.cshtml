@@ -1,0 +1,58 @@
+﻿@page
+@model Restauracja.Pages.Cart.CartModel
+
+@{
+    ViewData["Title"] = "Koszyk";
+}
+
+<h1>Koszyk</h1>
+
+@if (Model.CartItems.Count == 0)
+{
+    <p>Twój koszyk jest pusty.</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Produkt</th>
+                <th>Ilość</th>
+                <th>Cena</th>
+                <th>Usuń</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.CartItems)
+            {
+                <tr>
+                    <td>@item.MenuItem.Name</td>
+                    <td>@item.Quantity</td>
+                    <td>@(item.Quantity * item.MenuItem.Price) PLN</td>
+                    <td>
+                        <form method="post" asp-page-handler="Remove" asp-route-id="@item.Id">
+                            <button type="submit" class="btn btn-danger">🗑 Usuń</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <h3>Łączna kwota: @(Model.TotalPrice) PLN</h3>
+
+    @if (Model.IsLoggedIn)
+    {
+        <form method="post">
+            <button type="submit" asp-page-handler="ApplyDiscount" class="btn btn-warning">
+                🎉 Zastosuj rabat 5% 🎉
+            </button>
+        </form>
+    }
+
+    <form method="post">
+        <button type="submit" asp-page-handler="Checkout" class="btn btn-success">
+            ✅ Złóż zamówienie
+        </button>
+    </form>
+}

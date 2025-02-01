@@ -1,0 +1,19 @@
+﻿@page
+@model Restauracja.Pages.Orders.DetailsModel
+@{
+    ViewData["Title"] = "Order Details";
+}
+
+<h1>Order Details</h1>
+
+<div>
+    <strong>User ID:</strong> @Model.Order.UserId
+</div>
+<div>
+    <strong>Order Date:</strong> @Model.Order.OrderDate
+</div>
+<div>
+    <strong>Total Price:</strong> @Model.Order.TotalPrice
+</div>
+
+<a asp-page="./Index">Back to Orders</a>

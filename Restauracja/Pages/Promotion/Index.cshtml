@@ -1,0 +1,25 @@
+﻿@page
+@model Restauracja.Pages.Promotion.IndexModel
+@{
+    ViewData["Title"] = "Promocje dla stałych klientów";
+}
+
+<h1>🎉 Promocje dla stałych klientów</h1>
+
+@if (Model.Promotions.Any())
+{
+    <ul>
+        @foreach (var promo in Model.Promotions)
+        {
+            <li>
+                <h3>@promo.Title</h3>
+                <p>@promo.Description</p>
+                <p><strong>Zniżka:</strong> @promo.Discount%</p>
+            </li>
+        }
+    </ul>
+}
+else
+{
+    <p>Brak dostępnych promocji.</p>
+}
